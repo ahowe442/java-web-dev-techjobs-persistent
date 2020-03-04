@@ -10,4 +10,7 @@ public class Skill extends AbstractEntity {
     @Size(max = 500, message = "Description too long!")
     String description;
 
+    public Skill (){}
+
+
 }
