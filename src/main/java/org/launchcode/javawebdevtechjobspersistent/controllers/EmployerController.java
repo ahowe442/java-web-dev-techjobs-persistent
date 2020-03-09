@@ -25,8 +25,10 @@ public class EmployerController {
 
     @GetMapping("add")
     public String displayAddEmployerForm(Model model) {
+        model.addAttribute("title", "Add Employer");
         model.addAttribute(new Employer());
         model.addAttribute("employers", employerRepository.findAll());
+
         return "employers/add";
     }
 
