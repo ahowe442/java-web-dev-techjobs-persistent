@@ -12,12 +12,12 @@ public class JobData {
 
     /**
      * Returns the results of searching the Jobs data by field and search term.
-     *
+     * <p>
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
-     * @param column Job field that should be searched.
-     * @param value Value of the field to search for.
+     * @param column  Job field that should be searched.
+     * @param value   Value of the field to search for.
      * @param allJobs The list of jobs to search.
      * @return List of all jobs matching the criteria.
      */
@@ -25,11 +25,11 @@ public class JobData {
 
         ArrayList<Job> results = new ArrayList<>();
 
-        if (value.toLowerCase().equals("all")){
+        if (value.toLowerCase().equals("all")) {
             return (ArrayList<Job>) allJobs;
         }
 
-        if (column.equals("all")){
+        if (column.equals("all")) {
             results = findByValue(value, allJobs);
             return results;
         }
@@ -45,15 +45,17 @@ public class JobData {
         return results;
     }
 
-    public static String getFieldValue(Job job, String fieldName)
-    {
-        String theValue;
-        if (fieldName.equals("name")){
+    public static String getFieldValue(Job job, String fieldName) {
+        String theValue = new String();
+//        String theValue;
+        if (fieldName.equals("name")) {
             theValue = job.getName();
-        } else if (fieldName.equals("employer")){
-            theValue = job.getEmployer().toString();
+        } else if (fieldName.equals("employer")) {
+            theValue = job.getEmployer().getName();
         } else {
-            theValue = job.getSkills().toString();
+            for (Skill skill : job.getSkills()) {
+                theValue = skill.getName();
+            }
         }
         return theValue;
     }
@@ -61,24 +63,26 @@ public class JobData {
     /**
      * Search all Job fields for the given term.
      *
-     * @param value The search term to look for.
+     * @param value   The search term to look for.
      * @param allJobs The list of jobs to search.
-     * @return      List of all jobs with at least one field containing the value.
+     * @return List of all jobs with at least one field containing the value.
      */
-    public static ArrayList<Job> findByValue(String value, Iterable<Job> allJobs){
+    public static ArrayList<Job> findByValue(String value, Iterable<Job> allJobs) {
         ArrayList<Job> results = new ArrayList<>();
         for (Job job : allJobs) {
             if (job.getName().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
-            } else if (job.getEmployer().toString().toLowerCase().contains(value.toLowerCase())) {
-                results.add(job);
-            } else if (job.getSkills().toString().toLowerCase().contains(value.toLowerCase())) {
-                results.add(job);
+            } else if (job.getEmployer().getName().toLowerCase().contains(value.toLowerCase())) {
+                {
+                    results.add(job);
+                }
+                for (Skill skill : job.getSkills()) {
+                    if (skill.getName().toLowerCase().contains(value.toLowerCase())) {
+                        results.add(job);
+                    }
+                }
             }
         }
         return results;
     }
-
-
 }
-
