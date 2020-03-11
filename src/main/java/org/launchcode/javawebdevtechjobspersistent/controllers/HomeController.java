@@ -54,6 +54,7 @@ public class HomeController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
+            jobRepository.save(newJob);
             return "add";
         }
 //        model.addAttribute("employer", employerRepository.findById(employerId));
@@ -70,7 +71,8 @@ public class HomeController {
 
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
-        //model.addAttribute("jobs_id", jobId);
+        model.addAttribute("jobId", jobId);
+        model.addAttribute("job", jobRepository.findById(jobId));
         return "view";
     }
 

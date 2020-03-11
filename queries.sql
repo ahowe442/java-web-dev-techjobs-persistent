@@ -6,8 +6,11 @@ SELECT * FROM techjobs.job;
 
 SELECT *
 FROM employer
-WHERE location = "St. Louis City"
+WHERE location = "St. Louis City";
 
 ## Part 3: Test it with SQL
 
+DROP TABLE job;
+
 ## Part 4: Test it with SQL
+
